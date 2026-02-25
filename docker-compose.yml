@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: banking_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "Vinaya!123shree"
+      MYSQL_DATABASE: banking
+      MYSQL_USER: vinaya
+      MYSQL_PASSWORD: "Vinaya!123shree"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  web:
+    build: .
+    container_name: banking_app
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    environment:
+      MYSQL_USER: vinaya
+      MYSQL_PASSWORD: "Vinaya!123shree"
+      MYSQL_HOST: db
+      MYSQL_DATABASE: banking
+
+volumes:
+  db_data:
